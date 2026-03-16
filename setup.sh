@@ -52,12 +52,19 @@ PROJECT_ID="${PROJECT_ID:-}"
 # Step 5: Presets
 echo ""
 echo -e "${BOLD}Select presets (comma-separated, or 'none'):${NC}"
-echo "  1) firebase   - Firestore, Cloud Functions patterns"
-echo "  2) nextjs     - Next.js App Router, API routes"
-echo "  3) vitest     - Vitest testing conventions"
-echo "  4) gcloud     - GCP deployment patterns"
-echo "  5) security   - Rate limiting, auth, secrets"
-echo "  a) all        - Install all presets"
+echo "  1) firebase      - Firestore, Cloud Functions patterns"
+echo "  2) nextjs        - Next.js App Router, API routes"
+echo "  3) vitest        - Vitest testing conventions"
+echo "  4) gcloud        - GCP deployment patterns"
+echo "  5) security      - Rate limiting, auth, secrets"
+echo "  6) python        - Python venv, pytest, type hints, linting"
+echo "  7) rust          - Rust cargo, error handling, modules, testing"
+echo "  8) go            - Go build/test, error handling, concurrency patterns"
+echo "  9) docker        - Multi-stage builds, security, health checks"
+echo "  10) react-native - Expo, navigation, state, performance"
+echo "  11) terraform    - Modules, state, variables, drift detection"
+echo "  12) django       - Models, views, DRF, settings organization"
+echo "  a) all           - Install all presets"
 read -p "Presets [none]: " PRESET_INPUT
 PRESET_INPUT="${PRESET_INPUT:-none}"
 
@@ -100,7 +107,7 @@ echo -e "  ${GREEN}+${NC} Core rules (self-improvement, tool-creation, monitorin
 # Copy presets
 if [ "$PRESET_INPUT" != "none" ]; then
   if [[ "$PRESET_INPUT" == *"a"* ]] || [[ "$PRESET_INPUT" == *"all"* ]]; then
-    PRESETS="firebase nextjs vitest gcloud security"
+    PRESETS="firebase nextjs vitest gcloud security python rust go docker react-native terraform django"
   else
     PRESETS=""
     [[ "$PRESET_INPUT" == *"1"* ]] || [[ "$PRESET_INPUT" == *"firebase"* ]] && PRESETS="$PRESETS firebase"
@@ -108,6 +115,13 @@ if [ "$PRESET_INPUT" != "none" ]; then
     [[ "$PRESET_INPUT" == *"3"* ]] || [[ "$PRESET_INPUT" == *"vitest"* ]] && PRESETS="$PRESETS vitest"
     [[ "$PRESET_INPUT" == *"4"* ]] || [[ "$PRESET_INPUT" == *"gcloud"* ]] && PRESETS="$PRESETS gcloud"
     [[ "$PRESET_INPUT" == *"5"* ]] || [[ "$PRESET_INPUT" == *"security"* ]] && PRESETS="$PRESETS security"
+    [[ "$PRESET_INPUT" == *"6"* ]] || [[ "$PRESET_INPUT" == *"python"* ]] && PRESETS="$PRESETS python"
+    [[ "$PRESET_INPUT" == *"7"* ]] || [[ "$PRESET_INPUT" == *"rust"* ]] && PRESETS="$PRESETS rust"
+    [[ "$PRESET_INPUT" == *"8"* ]] || [[ "$PRESET_INPUT" == *"go"* ]] && PRESETS="$PRESETS go"
+    [[ "$PRESET_INPUT" == *"9"* ]] || [[ "$PRESET_INPUT" == *"docker"* ]] && PRESETS="$PRESETS docker"
+    [[ "$PRESET_INPUT" == *"10"* ]] || [[ "$PRESET_INPUT" == *"react-native"* ]] && PRESETS="$PRESETS react-native"
+    [[ "$PRESET_INPUT" == *"11"* ]] || [[ "$PRESET_INPUT" == *"terraform"* ]] && PRESETS="$PRESETS terraform"
+    [[ "$PRESET_INPUT" == *"12"* ]] || [[ "$PRESET_INPUT" == *"django"* ]] && PRESETS="$PRESETS django"
   fi
 
   for preset in $PRESETS; do

@@ -53,13 +53,20 @@ bash <(curl -sL https://raw.githubusercontent.com/sethdford/claude-code-agi/main
 
 During setup, choose tech-stack-specific rules:
 
-| Preset   | Rule File     | Covers                                              |
-| -------- | ------------- | --------------------------------------------------- |
-| Firebase | `firebase.md` | Collection naming, function groups, deploy patterns |
-| Next.js  | `nextjs.md`   | API routes, middleware, proxy patterns              |
-| Vitest   | `testing.md`  | Mock patterns, coverage thresholds, conventions     |
-| GCloud   | `gcloud.md`   | Cloud Run, Cloud Functions, logging                 |
-| Security | `security.md` | Rate limiting, auth, JSON safety, secrets           |
+| Preset      | Rule File      | Covers                                              |
+| ----------- | -------------- | --------------------------------------------------- |
+| Firebase    | `firebase.md`  | Collection naming, function groups, deploy patterns |
+| Next.js     | `nextjs.md`    | API routes, middleware, proxy patterns              |
+| Vitest      | `testing.md`   | Mock patterns, coverage thresholds, conventions     |
+| GCloud      | `gcloud.md`    | Cloud Run, Cloud Functions, logging                 |
+| Security    | `security.md`  | Rate limiting, auth, JSON safety, secrets           |
+| Python      | `python.md`    | Virtual envs, pytest, type hints, common patterns   |
+| Rust        | `rust.md`      | Cargo, error handling, testing conventions          |
+| Go          | `go.md`        | Modules, error handling, concurrency, testing       |
+| Docker      | `docker.md`    | Image best practices, compose, registry patterns    |
+| React Native| `react-native.md` | iOS/Android conventions, testing, deployment        |
+| Terraform   | `terraform.md` | Module structure, state management, testing         |
+| Django      | `django.md`    | Models, views, middleware, testing conventions      |
 
 ## Custom Agents (Optional)
 
@@ -129,6 +136,25 @@ This project implements 10 capabilities that push Claude Code toward autonomous 
 10. **Collaborative Intelligence** — agent teams with shared context
 
 Read the full philosophy: [docs/philosophy.md](docs/philosophy.md)
+
+## Docs & Workflows
+
+Comprehensive guides for advanced Claude Code workflows:
+
+| Doc | Description |
+|-----|-------------|
+| [plugins.md](docs/plugins.md) | Recommended plugins (Superpowers, Hookify, Commit Commands, etc.) |
+| [keybindings.md](docs/keybindings.md) | Keyboard shortcuts, plan mode, model switching, customization |
+| [agent-teams.md](docs/agent-teams.md) | Multi-agent coordination, task distribution, parallel execution |
+| [loop-scheduling.md](docs/loop-scheduling.md) | Cron scheduling patterns, background monitoring with `/loop` |
+| [worktrees.md](docs/worktrees.md) | Parallel development in git worktrees, isolation strategies |
+| [background-tasks.md](docs/background-tasks.md) | Long-running operations, background agents, status tracking |
+| [pipeline-workflow.md](docs/pipeline-workflow.md) | Development pipeline stages, quality gates, deployment |
+| [cost-management.md](docs/cost-management.md) | Token budgeting, cost tracking, optimization strategies |
+| [quality-ceremonies.md](docs/quality-ceremonies.md) | Quality rituals, weekly audits, standards drift prevention |
+| [workflows/audit-codebase.md](docs/workflows/audit-codebase.md) | Recipe: Audit entire codebase with 7 parallel agents in 15-20 min |
+| [workflows/massive-refactor.md](docs/workflows/massive-refactor.md) | Recipe: Large refactors across 50+ files with safe parallelism |
+| [workflows/debug-production.md](docs/workflows/debug-production.md) | Recipe: Debug production issues, identify root cause, deploy fix |
 
 ## Requirements
 
