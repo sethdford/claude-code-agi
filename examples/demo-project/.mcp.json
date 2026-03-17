@@ -1,0 +1,25 @@
+{
+  "mcpServers": {
+    "context7": {
+      "command": "npx",
+      "args": ["@context7/mcp-server"],
+      "description": "Context7 documentation search and retrieval",
+      "enabled": true,
+      "alwaysAllow": [
+        "mcp__context7__resolve-library-id",
+        "mcp__context7__query-docs"
+      ]
+    },
+    "sequential-thinking": {
+      "command": "npx",
+      "args": ["sequential-thinking-mcp-server"],
+      "description": "Claude's sequential thinking for complex reasoning",
+      "enabled": true,
+      "alwaysAllow": ["thinking"]
+    }
+  },
+  "toolSearch": {
+    "enabled": true,
+    "threshold": "10%"
+  }
+}

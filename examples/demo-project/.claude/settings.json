@@ -1,0 +1,62 @@
+{
+  "rules": [".claude/rules/*.md"],
+  "agent": {
+    "mode": "auto",
+    "model": "claude-opus-4-6"
+  },
+  "permissions": {
+    "mode": "auto",
+    "preApprovedTools": {
+      "Bash": true,
+      "Edit": true,
+      "Read": true,
+      "Glob": true,
+      "Grep": true,
+      "Write": true,
+      "NotebookEdit": true
+    }
+  },
+  "hooks": {
+    "PreToolUse": {
+      "bash:cd": {
+        "description": "Maintain project working directory in bash",
+        "matcher": "^cd ",
+        "command": "true"
+      }
+    },
+    "PostToolUse": {
+      "test-failure-capture": {
+        "description": "Capture test failures for lessons.md",
+        "matcher": "test|failing|fail",
+        "command": "echo 'Test failure detected - update .claude/lessons.md'"
+      }
+    }
+  },
+  "environment": {
+    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1",
+    "CLAUDE_CODE_SUBAGENT_MODEL": "haiku",
+    "CLAUDE_CODE_MAX_TOOL_USE_CONCURRENCY": "5",
+    "CLAUDE_CODE_AUTOCOMPACT_PCT_OVERRIDE": "70",
+    "CLAUDE_CODE_GLOB_HIDDEN": "1",
+    "CLAUDE_CODE_BASH_MAINTAIN_PROJECT_WORKING_DIR": "1",
+    "CLAUDE_CODE_EFFORT_LEVEL": "high",
+    "CLAUDE_CODE_EMIT_TOOL_USE_SUMMARIES": "1",
+    "ENABLE_TOOL_SEARCH": "auto"
+  },
+  "denySandbox": ["*sk-ant-*"],
+  "mcp": {
+    "enabled": true,
+    "servers": [
+      {
+        "name": "context7",
+        "command": "npx",
+        "args": ["@context7/mcp-server"]
+      },
+      {
+        "name": "sequential-thinking",
+        "command": "npx",
+        "args": ["sequential-thinking-mcp-server"]
+      }
+    ]
+  }
+}

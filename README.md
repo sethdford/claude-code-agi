@@ -1,3 +1,7 @@
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![GitHub stars](https://img.shields.io/github/stars/sethdford/claude-code-agi)](https://github.com/sethdford/claude-code-agi/stargazers)
+[![Works with Claude Code](https://img.shields.io/badge/Works%20with-Claude%20Code-blueviolet)](https://claude.com/claude-code)
+
 # Claude Code AGI
 
 Transform Claude Code from an interactive assistant into an autonomous agent with persistent memory, self-improvement, and production awareness.
@@ -14,6 +18,21 @@ A starter kit that configures Claude Code for maximum autonomy. Drop it into any
 - **Context Optimization** — 25% less wasted tokens via .claudeignore
 - **Modular Rules** — Domain knowledge auto-loaded every session
 - **Deploy Tracking** — Every deploy outcome recorded for learning
+
+## Before vs After
+
+| Capability | Vanilla Claude Code | With claude-code-agi |
+|-----------|-------------------|---------------------|
+| Session memory | None — fresh start every time | Loads last 3 sessions + production health |
+| Permission handling | Manual approval for every action | Auto mode — Claude decides autonomously |
+| Learning from mistakes | Forgets corrections between sessions | Lessons file persists, reviewed at start |
+| Production awareness | None — doesn't know what's deployed | Health check runs at session start |
+| Context efficiency | Loads everything, wastes ~25% | .claudeignore excludes irrelevant files |
+| Domain knowledge | None — rediscovers conventions each time | Rules auto-loaded every session |
+| Deploy tracking | None | Every deploy outcome recorded |
+| Error recovery | Manual investigation | Monitoring rules + error investigation protocol |
+| Tool creation | Manual | Protocol for when to build hooks/skills/scripts |
+| Reasoning depth | Default | High effort mode for deeper analysis |
 
 ## Quick Install
 
@@ -67,6 +86,9 @@ During setup, choose tech-stack-specific rules:
 | React Native| `react-native.md` | iOS/Android conventions, testing, deployment        |
 | Terraform   | `terraform.md` | Module structure, state management, testing         |
 | Django      | `django.md`    | Models, views, middleware, testing conventions      |
+| Rails       | `rails.md`     | Models, controllers, migrations, testing, generators |
+| Svelte      | `svelte.md`    | Components, stores, SvelteKit routing, testing      |
+| Flutter     | `flutter.md`   | Widgets, state management, build patterns, testing  |
 
 ## Custom Agents (Optional)
 
@@ -155,6 +177,9 @@ Comprehensive guides for advanced Claude Code workflows:
 | [workflows/audit-codebase.md](docs/workflows/audit-codebase.md) | Recipe: Audit entire codebase with 7 parallel agents in 15-20 min |
 | [workflows/massive-refactor.md](docs/workflows/massive-refactor.md) | Recipe: Large refactors across 50+ files with safe parallelism |
 | [workflows/debug-production.md](docs/workflows/debug-production.md) | Recipe: Debug production issues, identify root cause, deploy fix |
+| [workflows/onboard.md](docs/workflows/onboard.md) | Recipe: Onboard new developers, set up tools, configure hooks |
+| [workflows/feature-from-scratch.md](docs/workflows/feature-from-scratch.md) | Recipe: Implement a feature end-to-end with tests, docs, and deploy |
+| [workflows/prepare-code-review.md](docs/workflows/prepare-code-review.md) | Recipe: Prepare PR for review with quality checks and test coverage |
 
 ## Requirements
 

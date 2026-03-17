@@ -1,0 +1,133 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test-setup:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Create temp project directory
+        run: mkdir -p /tmp/test-project
+
+      - name: Run setup script
+        run: |
+          bash setup.sh < /dev/null << 'SETUP_INPUT'
+          /tmp/test-project
+          test-project
+
+
+          none
+          n
+          SETUP_INPUT
+
+      - name: Verify core files are created
+        run: |
+          set -e
+          test -f /tmp/test-project/.claude/CLAUDE.md
+          test -f /tmp/test-project/.claude/settings.json
+          test -f /tmp/test-project/.claude/hooks/session-start-context.sh
+          test -f /tmp/test-project/.claude/hooks/session-end-summary.sh
+          test -f /tmp/test-project/.claude/rules/self-improvement.md
+          test -f /tmp/test-project/.claudeignore
+          test -f /tmp/test-project/.mcp.json
+          echo "All core files verified"
+
+      - name: Verify hooks are executable
+        run: |
+          set -e
+          test -x /tmp/test-project/.claude/hooks/session-start-context.sh
+          test -x /tmp/test-project/.claude/hooks/session-end-summary.sh
+          echo "All hooks are executable"
+
+      - name: Verify settings.json is valid JSON
+        run: python3 -m json.tool /tmp/test-project/.claude/settings.json > /dev/null && echo "settings.json is valid JSON"
+
+      - name: Verify .mcp.json is valid JSON
+        run: python3 -m json.tool /tmp/test-project/.mcp.json > /dev/null && echo ".mcp.json is valid JSON"
+
+      - name: Verify .claudeignore is readable
+        run: |
+          test -r /tmp/test-project/.claudeignore
+          echo ".claudeignore is readable"
+
+      - name: Verify CLAUDE.md contains key sections
+        run: |
+          set -e
+          grep -q "Model Selection" /tmp/test-project/.claude/CLAUDE.md
+          grep -q "Subagent Strategy" /tmp/test-project/.claude/CLAUDE.md
+          grep -q "Core Principles" /tmp/test-project/.claude/CLAUDE.md
+          echo "CLAUDE.md contains required sections"
+
+      - name: Verify settings.json structure
+        run: python3 << 'PYTHON_EOF'
+          import json
+          import sys
+
+          with open('/tmp/test-project/.claude/settings.json', 'r') as f:
+              config = json.load(f)
+
+          required_keys = ['rules', 'agent', 'permissions', 'hooks', 'environment', 'mcp']
+          for key in required_keys:
+              if key not in config:
+                  print(f"ERROR: Missing required key: {key}")
+                  sys.exit(1)
+
+          if config.get('permissions', {}).get('mode') != 'auto':
+              print("ERROR: Permission mode should be 'auto'")
+              sys.exit(1)
+
+          if 'claude-opus-4-6' not in str(config.get('agent', {})):
+              print("ERROR: Should default to claude-opus-4-6")
+              sys.exit(1)
+
+          print("✓ settings.json structure is valid")
+          print(f"  - Rules: {config.get('rules')}")
+          print(f"  - Permission mode: {config.get('permissions', {}).get('mode')}")
+          print(f"  - MCP enabled: {config.get('mcp', {}).get('enabled')}")
+        PYTHON_EOF
+
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Verify markdown files are readable
+        run: |
+          find . -name "*.md" -type f ! -path "./node_modules/*" ! -path "./.git/*" -print0 | xargs -0 test -r
+          echo "All markdown files are readable"
+
+      - name: Verify shell scripts syntax
+        run: |
+          for f in core/hooks/*.sh examples/demo-project/.claude/hooks/*.sh; do
+            if [ -f "$f" ]; then
+              bash -n "$f" && echo "✓ $f syntax OK" || (echo "ERROR in $f"; exit 1)
+            fi
+          done
+
+  docs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Verify core documentation
+        run: |
+          test -f README.md
+          test -f CONTRIBUTING.md
+          test -f CHANGELOG.md
+          echo "✓ Core documentation files exist"
+
+      - name: Verify docs directory structure
+        run: |
+          test -d docs
+          test -f docs/README.md
+          echo "✓ Documentation structure is valid"
